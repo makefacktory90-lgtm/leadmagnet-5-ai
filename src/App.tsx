@@ -141,15 +141,62 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [printMode])
 
-  // Print mode: show all slides stacked
+  // Print mode: compact one-pager
   if (printMode) {
+    const things = SLIDES.filter(s => s.type === 'THING')
     return (
-      <div className="bg-[#0A0A0A] print-mode">
-        {SLIDES.map((s) => (
-          <div key={s.id} className="print-slide">
-            {renderSlide(s)}
+      <div className="bg-[#0A0A0A] print-onepage text-white" style={{ fontFamily: 'Inter, sans-serif', padding: '32px 40px', minHeight: '100vh', boxSizing: 'border-box' }}>
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '20px', borderBottom: `2px solid ${RED}`, paddingBottom: '12px' }}>
+          <div>
+            <h1 style={{ fontFamily: 'Bebas Neue, Impact, sans-serif', fontSize: '36px', margin: 0, letterSpacing: '2px' }}>
+              5 ВЕЩЕЙ, <span style={{ color: TIFFANY }}>КОТОРЫЕ AI ДЕЛАЕТ ЗА ТЕБЯ</span>
+            </h1>
+            <p style={{ color: '#999', fontSize: '13px', margin: '4px 0 0' }}>пока ты пьёшь кофе</p>
           </div>
-        ))}
+          <p style={{ color: RED, fontSize: '12px', letterSpacing: '2px' }}>@IRA.AND.AI</p>
+        </div>
+
+        {/* 5 Things */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          {things.map((t) => (
+            <div key={t.id} style={{ display: 'flex', gap: '16px', background: '#141414', borderRadius: '8px', padding: '14px 16px', borderLeft: `3px solid ${'color' in t ? (t as any).color : RED}` }}>
+              {/* Number */}
+              <div style={{ fontFamily: 'Bebas Neue, Impact, sans-serif', fontSize: '32px', color: 'color' in t ? (t as any).color : RED, lineHeight: 1, minWidth: '36px' }}>
+                {'num' in t && t.num}
+              </div>
+              {/* Content */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                  <h3 style={{ fontFamily: 'Bebas Neue, Impact, sans-serif', fontSize: '18px', margin: 0, letterSpacing: '1px' }}>{t.title}</h3>
+                  {'time' in t && <span style={{ color: TIFFANY, fontSize: '11px', fontWeight: 'bold' }}>☕ {t.time}</span>}
+                </div>
+                {'tools' in t && (
+                  <p style={{ color: '#888', fontSize: '11px', margin: '0 0 6px' }}>
+                    <span style={{ color: TIFFANY, fontWeight: 'bold', textTransform: 'uppercase', fontSize: '10px', letterSpacing: '1px' }}>Чем: </span>
+                    {t.tools}
+                  </p>
+                )}
+                {'prompt' in t && (
+                  <div style={{ background: '#1a1a1a', borderRadius: '4px', padding: '8px 10px', fontSize: '11px', color: '#ccc', lineHeight: '1.5', whiteSpace: 'pre-line' }}>
+                    {t.prompt}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: `1px solid #333`, paddingTop: '12px' }}>
+          <div>
+            <p style={{ fontSize: '13px', color: '#999', margin: 0 }}>5 задач × 30 мин = <strong style={{ color: TIFFANY }}>2.5 часа / день</strong> = <strong style={{ color: 'white' }}>50 часов в месяц</strong></p>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <p style={{ fontSize: '13px', color: RED, fontWeight: 'bold', margin: 0 }}>Подпишись на @ira.and.ai</p>
+            <p style={{ fontSize: '11px', color: TIFFANY, margin: '2px 0 0' }}>Готово — лучше, чем идеально 🍸</p>
+          </div>
+        </div>
       </div>
     )
   }
