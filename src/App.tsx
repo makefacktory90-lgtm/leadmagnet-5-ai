@@ -12,7 +12,7 @@ const SLIDES = [
     title: '5 ВЕЩЕЙ',
     subtitle: 'которые AI делает за тебя, пока ты пьёшь кофе',
     tagline: '@IRA.AND.AI',
-    backgroundGif: 'https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif',
+    backgroundGif: 'https://media.giphy.com/media/l4FGquSwfx52EPXzO/giphy.gif',
   },
   {
     id: 2,
