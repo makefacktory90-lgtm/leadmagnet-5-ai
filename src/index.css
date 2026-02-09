@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap');
+
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #0A0A0A;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+}
+
+.film-grain {
+  position: relative;
+}
+
+.film-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.08;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Print / PDF mode */
+.print-mode {
+  overflow: visible !important;
+  height: auto !important;
+}
+
+.print-slide {
+  width: 100vw;
+  height: 100vh;
+  page-break-after: always;
+  break-after: page;
+  overflow: hidden;
+  position: relative;
+}
+
+.print-slide:last-child {
+  page-break-after: avoid;
+}
+
+@media print {
+  body {
+    background: #0A0A0A !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .print-slide {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .film-grain::after {
+    display: none;
+  }
+}
